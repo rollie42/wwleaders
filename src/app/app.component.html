@@ -8,29 +8,58 @@
 
 <div class="filter-container">
   <div class="filter-select">
+    <div>
+      <mat-label>Factions</mat-label>
     <mat-form-field>
-      <mat-label>Add a Filter</mat-label>
-      <mat-select #select>
-        <ng-container *ngFor="let filter of filters">
-          <mat-option *ngIf="!filter.isActive" [value]="filter">
-            {{ filter.name }}
+      <mat-label>Only show games with...</mat-label>
+      <mat-select multiple #includeFactions>
+        <ng-container *ngFor="let faction of headers">
+          <mat-option [value]="faction">
+            {{ faction }}
           </mat-option>
         </ng-container>
       </mat-select>
     </mat-form-field>
 
-    <button class="filter-button" mat-raised-button color="primary" (click)="addFilter(select)" [disabled]="!select.value">Add Filter</button>
-
-    <div class="filter-chips">
-      <mat-chip-list>
-        <ng-container *ngFor="let filter of filters">
-          <mat-chip *ngIf="filter.isActive" [color]="filter.color" selected>
-            {{ filter.name }}
-            <mat-icon matChipRemove (click)="removeFilter(filter)">cancel</mat-icon>
-          </mat-chip>
+    <mat-form-field>
+      <mat-label>Exclude games with...</mat-label>
+      <mat-select multiple #excludeFactions>
+        <ng-container *ngFor="let faction of headers">
+          <mat-option [value]="faction">
+            {{ faction }}
+          </mat-option>
         </ng-container>
-      </mat-chip-list>
-    </div>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div>    
+    <mat-label>Winner</mat-label>
+    <mat-form-field>
+      <mat-label>Won by...</mat-label>
+      <mat-select #winningFaction>
+        <mat-option>[Any]</mat-option>
+        <ng-container *ngFor="let faction of headers">
+          <mat-option [value]="faction">
+            {{ faction }}
+          </mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Win type...</mat-label>
+      <mat-select #winType>
+        <mat-option>[Any]</mat-option>
+        <ng-container *ngFor="let winType of winTypes">
+          <mat-option [value]="winType">
+            {{ winType }}
+          </mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+    </div>    
+
+    <button class="filter-button" mat-raised-button color="primary" (click)="updateFilters(includeFactions, excludeFactions, winningFaction, winType)">Add Filter</button>
+
   </div>
 </div>
 
